@@ -129,44 +129,23 @@ typedef PatternAndName PatternAndNameList[];
 // List of patterns to cycle through.  Each is defined as a separate function below.
 
 PatternAndNameList patterns = {
-    // {pride, "Pride"},
+    {palettetest, "Palette"},
     {colorWaves, "Color Waves"},
-
-    // // twinkle patterns
-    // {rainbowTwinkles, "Rainbow Twinkles"},
-    // {snowTwinkles, "Snow Twinkles"},
-    // {cloudTwinkles, "Cloud Twinkles"},
-    // {incandescentTwinkles, "Incandescent Twinkles"},
-
-
-    // TwinkleFOX patterns
     {retroC9Twinkles, "Retro C9 Twinkles"},
     {redWhiteTwinkles, "Red & White Twinkles"},
     {blueWhiteTwinkles, "Blue & White Twinkles"},
     {redGreenWhiteTwinkles, "Red, Green & White Twinkles"},
     {fairyLightTwinkles, "Fairy Light Twinkles"},
-    // {snow2Twinkles, "Snow 2 Twinkles"},
     {hollyTwinkles, "Holly Twinkles"},
-    // {iceTwinkles, "Ice Twinkles"},
     {partyTwinkles, "Party Twinkles"},
     {forestTwinkles, "Forest Twinkles"},
     {lavaTwinkles, "Lava Twinkles"},
     {fireTwinkles, "Fire Twinkles"},
-    // {cloud2Twinkles, "Cloud 2 Twinkles"},
-    // {oceanTwinkles, "Ocean Twinkles"},
     {autumnTwinkles, "Autumn Twinkles"},
     {orangeTwinkles, "Orange Twinkles"},
-
     {rainbow, "Rainbow"},
     {rainbowWithGlitter, "Rainbow With Glitter"},
     {rainbowSolid, "Solid Rainbow"},
-    // {confetti, "Confetti"},
-    {sinelon, "Sinelon"},
-    // {bpm, "Beat"},
-    // {juggle, "Juggle"},
-    // {fire, "Fire"},
-    // {water, "Water"},
-
     {showSolidColor, "Solid Color"}};
 
 const uint8_t patternCount = ARRAY_SIZE(patterns);
@@ -180,7 +159,6 @@ typedef PaletteAndName PaletteAndNameList[];
 
 const CRGBPalette16 palettes[] = {
     RainbowColors_p,
-    // RainbowStripeColors_p,
     CloudColors_p,
     LavaColors_p,
     OceanColors_p,
@@ -188,22 +166,83 @@ const CRGBPalette16 palettes[] = {
     PartyColors_p,
     HeatColors_p,
     Sunset_Real_gp,
-    es_vintage_01_gp
+    es_rivendell_15_gp,
+    es_ocean_breeze_036_gp,
+    rgi_15_gp,
+    retro2_16_gp,
+    Analogous_1_gp,
+    es_pinksplash_08_gp,
+    Coral_reef_gp,
+    es_ocean_breeze_068_gp,
+    es_pinksplash_07_gp,
+    es_vintage_01_gp,
+    departure_gp,
+    es_landscape_64_gp,
+    es_landscape_33_gp,
+    rainbowsherbet_gp,
+    gr65_hult_gp,
+    gr64_hult_gp,
+    GMT_drywet_gp,
+    ib_jul01_gp,
+    es_vintage_57_gp,
+    ib15_gp,
+    Fuschia_7_gp,
+    es_emerald_dragon_08_gp,
+    lava_gp,
+    fire_gp,
+    Colorfull_gp,
+    Magenta_Evening_gp,
+    Pink_Purple_gp,
+    es_autumn_19_gp,
+    BlacK_Blue_Magenta_White_gp,
+    BlacK_Magenta_Red_gp,
+    BlacK_Red_Magenta_Yellow_gp,
+    Blue_Cyan_Yellow_gp
     };
 
 const uint8_t paletteCount = ARRAY_SIZE(palettes);
 
 const String paletteNames[paletteCount] = {
     "Rainbow",
-    // "Rainbow Stripe",
     "Cloud",
     "Lava",
     "Ocean",
     "Forest",
     "Party",
     "Heat",
-    "Sunset",
-    "Vintage"
+    "Sunset_Real_gp",
+    "es_rivendell_15_gp",
+    "es_ocean_breeze_036_gp",
+    "rgi_15_gp",
+    "retro2_16_gp",
+    "Analogous_1_gp",
+    "es_pinksplash_08_gp",
+    "Coral_reef_gp",
+    "es_ocean_breeze_068_gp",
+    "es_pinksplash_07_gp",
+    "es_vintage_01_gp",
+    "departure_gp",
+    "es_landscape_64_gp",
+    "es_landscape_33_gp",
+    "rainbowsherbet_gp",
+    "gr65_hult_gp",
+    "gr64_hult_gp",
+    "GMT_drywet_gp",
+    "ib_jul01_gp",
+    "es_vintage_57_gp",
+    "ib15_gp",
+    "Fuschia_7_gp",
+    "es_emerald_dragon_08_gp",
+    "lava_gp",
+    "fire_gp",
+    "Colorfull_gp",
+    "Magenta_Evening_gp",
+    "Pink_Purple_gp",
+    "es_autumn_19_gp",
+    "BlacK_Blue_Magenta_White_gp",
+    "BlacK_Magenta_Red_gp",
+    "BlacK_Red_Magenta_Yellow_gp",
+    "Blue_Cyan_Yellow_gp"
 };
 
 #include "Fields.h"
@@ -1097,11 +1136,12 @@ void colorwaves(CRGB *ledarray, uint16_t numleds, CRGBPalette16 &palette)
   }
 }
 
-// Alternate rendering function just scrolls the current palette
-// across the defined LED strip.
-void palettetest(CRGB *ledarray, uint16_t numleds, const CRGBPalette16 &gCurrentPalette)
+void palettetest()
 {
+  CRGBPalette16 palette = palettes[currentPaletteIndex];
   static uint8_t startindex = 0;
   startindex--;
-  fill_palette(ledarray, numleds, startindex, (256 / NUM_LEDS) + 1, gCurrentPalette, 255, LINEARBLEND);
+  // Dividing by speed gives interesting effect with a reversal at low speeds but introduces jitter
+  // fill_palette(leds, NUM_LEDS, startindex, ((65536/speed) / NUM_LEDS) + 1, palette, 255, LINEARBLEND);
+  fill_palette(leds, NUM_LEDS, startindex, (256 / NUM_LEDS) + 1, palette, 255, LINEARBLEND);
 }
