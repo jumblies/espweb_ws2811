@@ -262,6 +262,14 @@ const TProgmemRGBPalette16 BlueWhite_p FL_PROGMEM =
    CRGB::Blue, CRGB::Blue, CRGB::Blue, CRGB::Blue,
    CRGB::Blue, CRGB::Gray, CRGB::Gray, CRGB::Gray };
 
+// A Patriotic RWB .
+// "CRGB::Gray" is used as white to keep the brightness more uniform.
+const TProgmemRGBPalette16 redBlueWhite_p FL_PROGMEM =
+{  CRGB::Red, CRGB::Red, CRGB::Gray, CRGB::Gray,
+   CRGB::Blue, CRGB::Blue, CRGB::Blue, CRGB::Blue,
+   CRGB::Red, CRGB::Red, CRGB::Gray, CRGB::Gray,
+   CRGB::Blue, CRGB::Gray, CRGB::Gray, CRGB::Gray };
+
 // A pure "fairy light" palette with some brightness variations
 #define HALFFAIRY ((CRGB::FairyLight & 0xFEFEFE) / 2)
 #define QUARTERFAIRY ((CRGB::FairyLight & 0xFCFCFC) / 4)
@@ -328,6 +336,13 @@ void blueWhiteTwinkles()
   twinkleFoxPalette = BlueWhite_p;
   drawTwinkles();
 }
+void redBlueWhiteTwinkles()
+{
+  twinkleFoxPalette = redBlueWhite_p;
+  drawTwinkles();
+}
+
+
 
 void fairyLightTwinkles()
 {

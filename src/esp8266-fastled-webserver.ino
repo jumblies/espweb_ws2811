@@ -63,6 +63,7 @@ const uint8_t brightnessCount = 5;
 uint8_t brightnessMap[brightnessCount] = {16, 32, 64, 128, 255};
 uint8_t brightnessIndex = 0;
 
+
 // ten seconds per color palette makes a good demo
 // 20-120 is better for deployment
 uint8_t secondsPerPalette = 20;
@@ -129,11 +130,18 @@ typedef PatternAndName PatternAndNameList[];
 // List of patterns to cycle through.  Each is defined as a separate function below.
 
 PatternAndNameList patterns = {
+  { sinelon,                "Sinelon" },
+  { bpm,                    "Beat" },
+  { juggle,                 "Juggle" },
+  { fire, "Fire" },
+  { incandescentTwinkles, "Incandescent Twinkles" },
     {palettetest, "Palette"},
     {colorWaves, "Color Waves"},
     {retroC9Twinkles, "Retro C9 Twinkles"},
     {redWhiteTwinkles, "Red & White Twinkles"},
     {blueWhiteTwinkles, "Blue & White Twinkles"},
+    {redBlueWhiteTwinkles, "USA Twinkles"},
+
     {redGreenWhiteTwinkles, "Red, Green & White Twinkles"},
     {fairyLightTwinkles, "Fairy Light Twinkles"},
     {hollyTwinkles, "Holly Twinkles"},
@@ -1145,3 +1153,4 @@ void palettetest()
   // fill_palette(leds, NUM_LEDS, startindex, ((65536/speed) / NUM_LEDS) + 1, palette, 255, LINEARBLEND);
   fill_palette(leds, NUM_LEDS, startindex, (256 / NUM_LEDS) + 1, palette, 255, LINEARBLEND);
 }
+
